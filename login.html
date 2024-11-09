@@ -1,0 +1,37 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="text" placeholder="Enter your username">
+    <button onclick="checkDate()">Log In</button>
+    <div id="result-div"></div>
+
+    <script>
+        const checkDate = async () => {
+            const username = document.querySelector('input').value;
+            const resultDiv = document.querySelector('#result-div');
+            let data;
+
+            try {
+                const result = await fetch(`/check_date?user=${username}`);
+                data = await result.json();
+            } catch (err) {
+                resultDiv.innerHTML = "Error: " + err.message;
+                return;
+            }
+
+            if (data.error === "user expired") {
+                resultDiv.innerHTML = "User expired! Please log out now!";
+            } else if (data.error) {
+                resultDiv.innerHTML = "Error: " + data.error;
+            } else {
+                resultDiv.innerHTML = "You have " + JSON.stringify(data) + " time left for your account.";
+            }
+        };
+    </script> 
+</body>
+</html>

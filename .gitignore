@@ -1,0 +1,4 @@
+.env
+node_modules/
+README_DEV.md
+.idx/.data/
